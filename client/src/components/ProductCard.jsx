@@ -1,9 +1,10 @@
 import { Box, Image, Text, Badge, Flex, IconButton, Skeleton } from '@chakra-ui/react';
+import { HiStar } from "react-icons/hi"
 import { BiExpand } from 'react-icons/bi';
 import React from 'react';
 
 const ProductCard = ({ product, loading }) => {
-  return <Skeleton isLoaded={!loading} _hover={{size: 1.5}}>
+  return <Skeleton loading={loading} _hover={{size: 1.5}}>
     <Box
       _hover={{transform: 'scale(1.1)', transitionDuration: '0.5s'}}
       borderWidth='1px'
@@ -12,14 +13,23 @@ const ProductCard = ({ product, loading }) => {
       shadow='md'>
       <Image />
       {product.stock < 5 ? (
-        <Badge colorScheme={'yellow'}> Only {product.sock} left!</Badge>
+        <Badge colorPalette={'yellow'}>
+          Only {product.stock} left!
+        </Badge>
       ) : product.stock < 1 ? (
-        <Badge colorScheme={'red'}>Sold Out</Badge>
+        <Badge colorPalette={'red'}>
+          Sold Out
+        </Badge>
       ) : (
-        <Badge colorScheme={'green'}>In Stock</Badge>
+        <Badge colorPalette={'green'}>
+          In Stock
+        </Badge>
       )}
       {product.productIsNew && (
-        <Badge ml='2' colorScheme={'purple'}></Badge>
+        <Badge ml='2' colorPalette={'purple'}>
+          <HiStar />
+          New!
+        </Badge>
       )}
     </Box>
   </Skeleton>;

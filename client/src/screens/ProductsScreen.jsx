@@ -3,7 +3,7 @@ import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const ProductsScreen = () =>{
+const ProductsScreen = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const ProductsScreen = () =>{
         <> 
             {data.length > 1 && (
                 <Box>
-                    <ProductCard product={data[0]} loading={false}/>
+                    <ProductCard product={data[3]} loading={false}/>
                 </Box>
             )}
         </>
