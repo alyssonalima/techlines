@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../redux/actions/productActions';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
+import { useTheme } from 'next-themes';
 
 const ProductsScreen = () => {
     {/*const [data, setData] = useState([]);
@@ -18,7 +19,7 @@ const ProductsScreen = () => {
             console.error('Error fetching data:', error);
         });
     }, []);*/}
-
+    const { theme } = useTheme();
     const dispatch = useDispatch();
     const {loading, error, products, pagination, favoritesToggled} = useSelector((state) => state.product);
 
@@ -45,7 +46,7 @@ const ProductsScreen = () => {
                     </HStack>
                     {!favoritesToggled && (
                         <HStack wrap='wrap' spacing='10px' justify='center' p='5'>
-                            <Button colorPalette={'cyan'} onClick={() => paginationButtonClick(1)}>
+                            <Button colorPalette={theme === 'dark' ? 'yellow' : 'cyan'} onClick={() => paginationButtonClick(1)}>
                                 <HiArrowLeft />
                             </Button>
                             {Array.from(Array(pagination.totalPages), (e, i) => {
@@ -55,7 +56,7 @@ const ProductsScreen = () => {
                                     </Button>
                                 )
                             })}
-                            <Button colorPalette={'cyan'} onClick={() => paginationButtonClick(pagination.totalPages)}>
+                            <Button colorPalette={theme === 'dark' ? 'yellow' : 'cyan'} onClick={() => paginationButtonClick(pagination.totalPages)}>
                                 <HiArrowRight />
                             </Button>
                         </HStack>

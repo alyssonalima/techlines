@@ -3,10 +3,10 @@ import { Box, Flex, Heading, HStack, Icon, Image, Link, Skeleton, Stack, Text } 
 import { useTheme } from 'next-themes';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link as ReactLink } from 'react-router-dom';
-import { BsPhoneFlip } from 'react-icons/bs';
+import { GiAbstract038 as SiteLogo } from 'react-icons/gi';
+//import { BsPhoneFlip } from 'react-icons/bs';
 
 import ThemeSwitcher from '../components/ThemeSwitcher';
-
 
 const LandingScreen = () => {
     const { theme } = useTheme();
@@ -24,12 +24,14 @@ const LandingScreen = () => {
                     py={{ base: '6', md: '8', lg: '12' }}>
                     <Stack spacing={{ base: '8', lg: '10' }}>
                         <Stack spacing={{ base: '2', lg: '4' }}>
-                            <ThemeSwitcher />
+                            {/* <Flex alignItems='center'>
+                                <ThemeSwitcher />
+                            </Flex> */}
                             <Flex alignItems='center'>
                                 <Icon h='12' w='12' color={theme === 'dark' ? 'yellow.200' : 'cyan.500'}>
-                                    <BsPhoneFlip />
+                                    <SiteLogo />
                                 </Icon>
-                                <Text fontSize='4xl' fontWeight='bold'>
+                                <Text fontSize='4xl' fontWeight='bold' px='4'>
                                     Tech Lines
                                 </Text>
                             </Flex>
