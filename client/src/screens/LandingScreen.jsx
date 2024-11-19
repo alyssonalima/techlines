@@ -6,8 +6,6 @@ import { Link as ReactLink } from 'react-router-dom';
 import { GiAbstract038 as SiteLogo } from 'react-icons/gi';
 //import { BsPhoneFlip } from 'react-icons/bs';
 
-import ThemeSwitcher from '../components/ThemeSwitcher';
-
 const LandingScreen = () => {
     const { theme } = useTheme();
 

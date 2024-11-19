@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Box, Flex, HStack, Icon, Stack, Text, } from '@chakra-ui/react';
+import { IconButton, Box, Flex, HStack, Icon, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Link as ReactLink } from 'react-router-dom'
@@ -11,6 +11,7 @@ import { BiUserCheck } from 'react-icons/bi';
 import { toggleFavorites } from '../redux/actions/productActions';
 import { LuMenu, LuX } from 'react-icons/lu';
 import { GiAbstract038 as SiteLogo } from 'react-icons/gi';
+import { TbShoppingCart } from 'react-icons/tb';
 //import { BsPhoneFlip } from 'react-icons/bs';
 
 const Links = [
@@ -21,12 +22,14 @@ const Links = [
 ]
 
 const Header = () => {
+    //const { open, onOpen, onClose } = useDisclosure;
     const [isOpen, setToggle] = useState(false);
     const toggleMenu = () => {
         isOpen ? setToggle(false) : setToggle(true);
     }
     const dispatch = useDispatch();
     const { favoritesToggled } = useSelector((state) => state.product);
+    const { cartItems } = useSelector((state) => state.cart);
     const { theme } = useTheme();
 
     useEffect(() => {}, [favoritesToggled, dispatch]);
@@ -35,9 +38,17 @@ const Header = () => {
         <Box bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} px='4'>
             <Flex h='16' alignItems='center' justifyContent='space-between'>
                 <Flex display={{base:'flex', md: 'none'}} alignItems='center'>
-                    <IconButton side='md' onClick={toggleMenu} bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} color={theme === 'dark' ? 'black' : 'white'}>
+                    <IconButton side='md' /*onClick={open ? onClose : onOpen}*/ onClick={toggleMenu} bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} color={theme === 'dark' ? 'black' : 'white'}>
                         {isOpen ? <LuX /> : <LuMenu />}
                     </IconButton>
+                    <IconButton ml='12' position='absolute' as={ReactLink} to='/cart' bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} color={theme === 'dark' ? 'black' : 'white'}>
+                        <TbShoppingCart size='20px' />
+                    </IconButton>
+                    {cartItems.length > 0 && (
+                        <Text fontWeight='bold' fontStyle='italic' position='absolute' ml='74px' mt='-6'>
+                            {cartItems.length}
+                        </Text>
+                    )}
                 </Flex>
                 <HStack spacing='8' alignItems='center'>
                     <Box alignItems='center' display='flex' as={ReactLink} to='/'>
@@ -54,6 +65,16 @@ const Header = () => {
                                 </Text> {' '}
                             </NavLink>
                         ))}
+                        <Box>
+                            <IconButton ml='12' as={ReactLink} to='/cart' bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} color={theme === 'dark' ? 'black' : 'white'}>
+                                <TbShoppingCart size='20px' />
+                            </IconButton>
+                            {cartItems.length > 0 && (
+                                <Text fontWeight='bold' fontStyle='italic' position='absolute' ml='74px' mt='-6' color={theme === 'dark' ? 'black' : 'white'}>
+                                    {cartItems.length}
+                                </Text>
+                            )}
+                        </Box>
                         <ThemeSwitcher />
                         {
                             favoritesToggled ? (
@@ -68,6 +89,12 @@ const Header = () => {
                         }
                     </HStack>
                 </HStack>
+                
+                <Flex alignItems='center'>
+                    <IconButton variant='ghost' bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} color={theme === 'dark' ? 'black' : 'white'}>
+                        <BiUserCheck />
+                    </IconButton>
+                </Flex>
             </Flex>
             <Box display='flex'>
                 { isOpen && (

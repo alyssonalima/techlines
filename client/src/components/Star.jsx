@@ -1,18 +1,18 @@
 import React from 'react'
-import { LuStar } from 'react-icons/lu';
+import { FaStar } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { Icon } from '@chakra-ui/react';
 
-const Star = (rating = 0, star = 0) => {
+const Star = ({rating = 0, star = 0}) => {
     const { theme } = useTheme();
-    const [setToggle] = useState('black');
-    const elementColor = () => {
-       theme === 'dark' ? setToggle('black') : setToggle('white');
-    }
     
     return (
-        
-        <LuStar color={ rating >= star || rating === 0 ? elementColor : 'gray.200'}/>
+        <Icon 
+            color={ rating >= star || rating === 0 ? 
+                theme === 'dark' ? 'yellow.500' : 'cyan.500' 
+                : 'gray.400'}>
+            <FaStar/>
+        </Icon>
     )
 }
 

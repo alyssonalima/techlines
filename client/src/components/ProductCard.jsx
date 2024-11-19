@@ -1,4 +1,6 @@
 import { Box, Image, Text, Badge, Flex, IconButton, Skeleton } from '@chakra-ui/react';
+import { Tooltip } from '../components/ui/tooltip';
+import { Toaster, toaster } from '../components/ui/toaster';
 import { HiStar } from "react-icons/hi"
 import { BiExpand } from 'react-icons/bi';
 import React, { useState } from 'react';
@@ -7,15 +9,46 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md'; 
 import { Link as ReactLink} from 'react-router-dom';
 import { useTheme } from 'next-themes';
+import { addCartItem } from '../redux/actions/cartActions';
+import { useEffect } from 'react';
+import { TbShoppingCartPlus } from 'react-icons/tb';
 
 const ProductCard = ({ product, loading }) => {
   const dispatch = useDispatch();
   const { favorites } = useSelector((state) => state.product);
   const [isShown, setIsShown] = useState(false);
   const { theme } = useTheme();
+  const { cartItems } = useSelector((state) => state.cart);
+  const [ cartPlusDisabled, setCartPlusDisabled ] = useState(false);
+
+  useEffect(() => {
+    const item = cartItems.find((cartItem) => cartItem.id === product._id);
+    if (item && item.qty === product.stock) {
+      setCartPlusDisabled(true);
+    }
+  }, [product, cartItems]);
+
+  const addItem = (id) => {
+    if (cartItems.some((cartItem) => cartItem.id === id)){
+        const item = cartItems.find((cartItem) => cartItem.id === id);
+        dispatch(addCartItem(id, Number(item.qty) + Number(1)));
+    } else {
+        dispatch(addCartItem(id, 1));
+    }
+    toaster.create({
+      title: 'Cart has been updated.',
+      type: 'success',
+      duration: 2000,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Toaster closed"),
+      },
+    });
+  };
 
   return (
     <Skeleton loading={loading} w='250px' h='450px'>
+      <Toaster />
       <Box
         _hover={{transform: 'scale(1.1)', transitionDuration: '0.6s'}}
         borderWidth='1px'
@@ -49,7 +82,7 @@ const ProductCard = ({ product, loading }) => {
             New!
           </Badge>
         )}
-        <Text lineClamp={1} fontSize='xl' fontWeight='semibold' mt='3'>
+        <Text lineClamp={1} fontSize='xl' fontWeight='semibold' mt='3' as={ReactLink} to={`/product/${product._id}`} >
           {product.brand} {` `} {product.name}
         </Text>
         <Text lineClamp={1} fontSize='md' color='gray.600'>
@@ -75,6 +108,21 @@ const ProductCard = ({ product, loading }) => {
           <IconButton colorPalette={theme === 'dark' ? 'yellow' : 'cyan'} size='sm' as={ReactLink} to={`/product/${product._id}`}>
             <BiExpand size='20'/>
           </IconButton>
+
+          <Tooltip 
+              disabled={!cartPlusDisabled} 
+              showArrow 
+              content={
+                !cartPlusDisabled 
+                ? 'You reached the maximum quantity of the product. ' 
+                : product.stock <= 0 
+                ? 'Out of stock' 
+                : '' 
+            }>
+            <IconButton disabled={product.stock <= 0 || cartPlusDisabled} colorPalette={theme === 'dark' ? 'yellow' : 'cyan'} onClick={() => addItem(product._id)}>
+              <TbShoppingCartPlus size='20' />
+            </IconButton>
+          </Tooltip>
         </Flex>
       </Box>
     </Skeleton>
