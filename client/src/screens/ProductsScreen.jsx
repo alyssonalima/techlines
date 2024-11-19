@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Center, HStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Center, HStack, Alert } from '@chakra-ui/react';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../redux/actions/productActions';
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi';
 import { useTheme } from 'next-themes';
+import { LuTerminal } from 'react-icons/lu';
 
 const ProductsScreen = () => {
     {/*const [data, setData] = useState([]);
@@ -30,19 +31,33 @@ const ProductsScreen = () => {
     const paginationButtonClick = (page) => {
         dispatch(getProducts(page));
     }
-
+    
     return (
         <> 
             {products.length >= 1 && (
-                <Box>
+                <Box py='6'>
                     <HStack wrap='wrap' spacing='30px' justify='center' minHeight='80vh' mx={{base: '12', md: '20', lg: '32'}} direction={{ base: "column", md: "row" }} gap="10">
-                        {products.map((product) => (
-                            <Flex justify='flex-start' key={product._id}>
-                                <Center w='250px' h='450px'>
-                                    <ProductCard product={product} loading={loading} />
-                                </Center>
-                            </Flex>
-                        ))}
+                        {error ? (
+                            <Alert status='error'>
+                                <Alert.Indicator>
+                                    <LuTerminal />
+                                </Alert.Indicator>
+                                <Alert.Title>
+                                    We are sorry!
+                                </Alert.Title>
+                                <Alert.Description>
+                                    {error}
+                                </Alert.Description>
+                            </Alert>
+                        ) : (
+                            products.map((product) => (
+                                <Flex justify='flex-start' key={product._id}>
+                                    <Center w='250px' h='450px'>
+                                        <ProductCard product={product} loading={loading} />
+                                    </Center>
+                                </Flex>
+                            ))
+                        )}
                     </HStack>
                     {!favoritesToggled && (
                         <HStack wrap='wrap' spacing='10px' justify='center' p='5'>
@@ -51,7 +66,7 @@ const ProductsScreen = () => {
                             </Button>
                             {Array.from(Array(pagination.totalPages), (e, i) => {
                                 return (
-                                    <Button colorPalette={pagination.currentPage === i + 1? 'cyan' : 'gray'} key={i} onClick={() => paginationButtonClick(i + 1)}>
+                                    <Button colorPalette={pagination.currentPage === i + 1? theme === 'dark' ? 'yellow' : 'cyan' : 'gray'} key={i} onClick={() => paginationButtonClick(i + 1)}>
                                         {i + 1}
                                     </Button>
                                 )
