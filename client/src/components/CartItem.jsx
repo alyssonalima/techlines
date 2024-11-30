@@ -45,4 +45,4 @@ const CartItem = ({cartItem}) => {
     )
 }
 
-export default CartItem
+export default CartItem;
