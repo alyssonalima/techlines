@@ -22,7 +22,7 @@ export const sendPasswordResetEmail = (token, email, name) => {
     const mailOptions = {
         from: 'alyssonalima02@gmail.com',
         to: email,
-        subject: 'Tech Lines: Request ofr a password reset.',
+        subject: 'Tech Lines: Request for a password reset.',
         html: html
     }
 

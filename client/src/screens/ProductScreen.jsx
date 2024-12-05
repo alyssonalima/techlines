@@ -70,7 +70,7 @@ const ProductScreen = () => {
                 <Spinner mt='20' borderWidth='2px' animationDuration='0.65s' colorPalette='cyan.500' size='xl' />
             </Stack>
         ) : error ? (
-            <Alert status='error'>
+            <Alert.Root status='error'>
                 <Alert.Indicator />
                 <Alert.Title>
                     We are sorry!
@@ -78,7 +78,7 @@ const ProductScreen = () => {
                 <Alert.Description>
                     {error}
                 </Alert.Description>
-            </Alert>
+            </Alert.Root>
         ) : (
             product && (
                 <Box maxW={{base : '3xl', lg: '5xl'}} mx='auto' px={{base: '4', md: '8', lg: '12'}} py={{base: '6', md: '8', lg: '12'}}>

@@ -58,13 +58,14 @@ export const verifyEmail = (token) => async (dispatch) => {
     try {
         const config = { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } };
 
-        await axios.get(`/api/users/verify-email`, config);
+		await axios.get(`/api/users/verify-email`, config);
 
-        dispatch(verifyEmail());
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-        userInfo.active = true;
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+		dispatch(verificationEmail());
+		const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+		if (userInfo) {
+			userInfo.active = true;
+			localStorage.setItem('userInfo', JSON.stringify(userInfo));
+		}
     } catch (error) {
         dispatch(
             setError(
@@ -83,9 +84,11 @@ export const sendResetEmail = (email) => async (dispatch) => {
     try {
         const config = { headers: { 'Content-Type': 'application/json' } };
 
-        const { data }= await axios.post(`/api/users/password-reset-request`, { email }, config);
+        const { data, status }= await axios.post(`/api/users/password-reset-request`, { email }, config);
 
         dispatch(setServerResponseMsg(data));
+
+        dispatch(setServerResponseStatus(status));
 
     } catch (error) {
         dispatch(
