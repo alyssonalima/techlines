@@ -8,7 +8,7 @@ export const sendVerificationEmail = (token, email, name) => {
             <h3>Dear ${name}</h3>
             <p>Thanks for signing up at Tech Lines!</p>
             <p>User the link below to verify your e-mail</p>
-            <a href="http://localhost:3000/verify-email/${token}">Click here!</a>
+            <a href="http://localhost:3000/email-verify/${token}">Click here!</a>
         </body>
     </html>
     `;
@@ -37,3 +37,4 @@ export const sendVerificationEmail = (token, email, name) => {
         }
     });
 }
+

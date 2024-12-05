@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import { sendVerificationEmail } from '../middleware/sendVerificationEmail.js';
+import { sendPasswordResetEmail } from '../middleware/sendPasswordResetEmail.js';
 
 const userRoutes = express.Router();
 
@@ -32,7 +33,7 @@ const loginUser = asyncHandler(async (req, res) => {
             created: user.createdAt
         });
     } else {
-        res.status(401).send('Invalid Email or Password');
+        res.status(401).send('Invalid E-mail or Password');
         throw new Error('User not found.')
     }
 });

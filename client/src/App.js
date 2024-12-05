@@ -8,6 +8,9 @@ import LoginScreen from "./screens/LoginScreen";
 import ThemeProvider from "./components/ThemeProvider";
 import CartScreen from "./screens/CartScreen";
 import Footer from "./components/Footer";
+import EmailVerificationScreen from "./screens/EmailVerificationScreen";
+import PasswordResetScreen from "./screens/PasswordResetScreen";
+import RegistrationScreen from "./screens/RegistrationScreen";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
               <Route path='/product/:id' element={<ProductScreen />} />
               <Route path='/cart' element={<CartScreen />} />
               <Route path='/login' element={<LoginScreen />} />
+              <Route path='/registration' element={<RegistrationScreen />} />
+              <Route path='/email-verify/:token' element={<EmailVerificationScreen />} />
+              <Route path='/password-reset/:token' element={<PasswordResetScreen />} />
             </Routes>
           </main>
           <Footer />

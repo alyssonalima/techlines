@@ -8,7 +8,7 @@ const Footer = () => {
     const { theme } = useTheme();
     
     return (
-        <Box bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} px='4'>
+        <Box w='100%' bg={theme === 'dark' ? 'yellow.300' : 'cyan.900'} px='4'>
             <Container as='footer' maxW='7xl'>
                 <Stack spacing='8' direction={{base: 'column', md: 'row'}} justify='space-between' py={{base: '12', md: '16'}}>
                     <Stack spacing={{base: '6', md: '8'}} align='start'>

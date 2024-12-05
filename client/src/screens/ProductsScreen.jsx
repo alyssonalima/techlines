@@ -38,7 +38,7 @@ const ProductsScreen = () => {
                 <Box py='6'>
                     <HStack wrap='wrap' spacing='30px' justify='center' minHeight='80vh' mx={{base: '12', md: '20', lg: '32'}} direction={{ base: "column", md: "row" }} gap="10">
                         {error ? (
-                            <Alert status='error'>
+                            <Alert.Root status='error'>
                                 <Alert.Indicator>
                                     <LuTerminal />
                                 </Alert.Indicator>
@@ -48,7 +48,7 @@ const ProductsScreen = () => {
                                 <Alert.Description>
                                     {error}
                                 </Alert.Description>
-                            </Alert>
+                            </Alert.Root>
                         ) : (
                             products.map((product) => (
                                 <Flex justify='flex-start' key={product._id}>
